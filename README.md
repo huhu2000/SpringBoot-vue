@@ -254,3 +254,4 @@ This project can be reference,study or teaching demonstration. After, I will upd
 
 
 ```
+前台启动使用 到前台目录下   npm run dev

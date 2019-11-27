@@ -19,6 +19,8 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'statics',
     assetsPublicPath: '/',
+    devtool: 'eval-source-map',
+    cacheBusting: false,
     cssSourceMap: false
   }
 }

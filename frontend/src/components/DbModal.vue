@@ -24,8 +24,8 @@
 
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button :plain="true" type="danger" v-on:click="canclemodal">Cancel</el-button>
-            <el-button :plain="true" @click="updateForm(form)">Save</el-button>
+            <el-button :plain="true" type="danger" v-on:click="canclemodal">取消</el-button>
+            <el-button :plain="true" @click="updateForm(form)">保存</el-button>
         </div>
     </el-dialog>
 </template>

@@ -47,7 +47,8 @@
                     label="Operation"
                     width="100">
                 <template scope="scope">
-                    <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>
+                    <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">编辑</el-button>
+                    <el-button @click="removeItem(scope.$index, tableData)" type="text" size="large">移除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -124,6 +125,18 @@
                 const idurl = 'http://127.0.0.1:8000/api/persons/detail/' + itemId;
                 this.$axios.get(idurl).then((response) => {
                     this.form = response.data;
+                }).catch(function (response) {
+                    console.log(response)
+                });
+            },
+            removeItem: function (index, rows) {
+                
+                const itemId = rows[index].id;
+                const idurl = 'http://127.0.0.1:8000/api/persons/remove/' + itemId;
+            
+                this.$axios.delete(idurl).then((response) => {
+                     location.reload();
+                    //this.form = response.data;
                 }).catch(function (response) {
                     console.log(response)
                 });

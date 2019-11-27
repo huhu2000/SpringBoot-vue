@@ -2,12 +2,7 @@ package com.boylegu.springboot_vue.controller;
 
 import com.boylegu.springboot_vue.entities.Persons;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +16,12 @@ import org.springframework.data.domain.PageRequest;
 import com.boylegu.springboot_vue.dao.PersonsRepository;
 import com.boylegu.springboot_vue.controller.pagination.PaginationMultiTypeValuesHelper;
 import com.boylegu.springboot_vue.controller.pagination.PaginationFormatting;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 
 
@@ -167,13 +167,61 @@ public class MainController {
          *  @apiSuccess {String} zone
 
         */
+
         Persons user = personsRepository.findById(id);
 
         user.setPhone(data.getPhone());
-
         user.setZone(data.getZone());
 
-        return personsRepository.save(user);
+        Persons resultPersons = personsRepository.save(user);
+        return resultPersons;
+    }
+
+
+    @RequestMapping(value = "/remove/{id}",  method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Persons>  removeUser(@PathVariable Long id) {
+
+         personsRepository.delete(id);
+        /*Persons user = personsRepository.findById(id);
+
+        user.setPhone(data.getPhone());
+
+        user.setZone(data.getZone());*/
+        return new ResponseEntity<>((Persons) null, HttpStatus.OK);
+
+    }
+
+
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    public List<Map<String,Object>> getMenu() {
+
+        List<Map<String, Object>> list = new ArrayList<>();
+        Map<String,Object> bean = new HashMap<>();
+        bean.put("msg","测试1");
+        list.add(bean);
+        bean = new HashMap<>();
+        bean.put("msg","测试2");
+        list.add(bean);
+        bean = new HashMap<>();
+        bean.put("msg","测试3");
+        list.add(bean);
+        return list;
+
+    }
+
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST ,consumes = "multipart/*", headers = "content-type=multipart/form-data" )
+    @ResponseBody
+    public String   studentInfoSave(@RequestParam("face") MultipartFile file)  {
+
+   /*     String filename = URLEncoder.encode(file.getOriginalFilename(), "utf-8");
+
+        InputStream inputStream = file.getInputStream();*/
+
+
+        return "上传成功";
+
+
     }
 
 }
